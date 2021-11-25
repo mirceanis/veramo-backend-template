@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG]"
+title: '[BUG]'
 labels: bug
 assignees: ''
-
 ---
 
 ### Prerequisites
@@ -41,9 +40,9 @@ Please provide detailed steps for reproducing the issue.
 
 Please provide any relevant information about your setup. This is important in case the issue is not reproducible except for under certain conditions.
 
-* node/browser version:
-* OS Version:
-* Device details:
+- node/browser version:
+- OS Version:
+- Device details:
 
 #### Failure Logs/Screenshots
 

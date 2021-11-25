@@ -1,14 +1,16 @@
-import { createAgent, IDataStore, IDIDManager, IResolver, IMessageHandler, IKeyManager, TAgent } from '@veramo/core'
+import { createAgent, IDataStore, IDIDManager, IKeyManager, IMessageHandler, IResolver } from '@veramo/core'
 import { CredentialIssuer, ICredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure, SdrMessageHandler, SelectiveDisclosure } from '@veramo/selective-disclosure'
 import { DIDComm, DIDCommMessageHandler, IDIDComm } from '@veramo/did-comm'
 import {
-  IDataStoreORM,
-  Entities,
-  KeyStore,
-  DIDStore,
   DataStore,
   DataStoreORM,
+  DIDStore,
+  Entities,
+  IDataStoreORM,
+  KeyStore,
+  migrations,
+  PrivateKeyStore,
   ProfileDiscoveryProvider,
 } from '@veramo/data-store'
 import { DIDDiscovery, IDIDDiscovery } from '@veramo/did-discovery'
@@ -35,13 +37,15 @@ const secretKey = '29739248cad1bd1a0fc4d9b75cd4d2990de535baf5caadfdf8d8f86664aa8
 const dbConnection = createConnection({
   type: 'sqlite',
   database: 'agent.sqlite',
-  synchronize: true,
+  synchronize: false,
+  migrations,
+  migrationsRun: true,
   logging: false,
   entities: Entities,
 })
 
 export const agent = createAgent<
-// these interfaces should match the plugins you add next. They are optional but very useful for auto-complete.
+  // these interfaces should match the plugins you add next. They are optional but very useful for auto-complete.
   IResolver &
     IKeyManager &
     IDIDManager &
@@ -64,9 +68,9 @@ export const agent = createAgent<
       }),
     }),
     new KeyManager({
-      store: new KeyStore(dbConnection, new SecretBox(secretKey)),
+      store: new KeyStore(dbConnection),
       kms: {
-        local: new KeyManagementSystem(),
+        local: new KeyManagementSystem(new PrivateKeyStore(dbConnection, new SecretBox(secretKey))),
       },
     }),
     new DIDManager({
@@ -76,7 +80,7 @@ export const agent = createAgent<
         'did:ethr:rinkeby': new EthrDIDProvider({
           defaultKms: 'local',
           network: 'rinkeby',
-          rpcUrl: 'https://rinkeby.infura.io/v3/' + infuraProjectId
+          rpcUrl: 'https://rinkeby.infura.io/v3/' + infuraProjectId,
         }),
         'did:web': new WebDIDProvider({
           defaultKms: 'local',

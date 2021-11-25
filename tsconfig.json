@@ -2,16 +2,10 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "ESNext",
-    "lib": [
-      "dom",
-      "es6",
-      "es2015.promise"
-    ],
+    "lib": ["dom", "es6", "es2015.promise"],
     "outDir": "lib",
     "strict": true,
-    "types": [
-      "jest"
-    ],
+    "types": ["jest"],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": false,
