@@ -10,8 +10,8 @@
   "automerge": true,
   "packageRules": [
     {
-      "packagePatterns": [
-        "veramo"
+      "matchPackagePatterns": [
+        "^@veramo"
       ],
       "groupName": "veramo-next-dependencies",
       "followTag": "next"
