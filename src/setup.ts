@@ -1,4 +1,12 @@
-import { createAgent, IDataStore, IDIDManager, IKeyManager, IMessageHandler, IResolver } from '@veramo/core'
+import {
+  createAgent,
+  IDataStore,
+  IDataStoreORM,
+  IDIDManager,
+  IKeyManager,
+  IMessageHandler,
+  IResolver,
+} from '@veramo/core'
 import { CredentialIssuer, ICredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure, SdrMessageHandler, SelectiveDisclosure } from '@veramo/selective-disclosure'
 import { DIDComm, DIDCommMessageHandler, IDIDComm } from '@veramo/did-comm'
@@ -7,11 +15,10 @@ import {
   DataStoreORM,
   DIDStore,
   Entities,
-  IDataStoreORM,
   KeyStore,
   migrations,
   PrivateKeyStore,
-  ProfileDiscoveryProvider,
+  DataStoreDiscoveryProvider,
 } from '@veramo/data-store'
 import { DIDDiscovery, IDIDDiscovery } from '@veramo/did-discovery'
 
@@ -104,7 +111,7 @@ export const agent = createAgent<
     new CredentialIssuer(),
     new SelectiveDisclosure(),
     new DIDDiscovery({
-      providers: [new AliasDiscoveryProvider(), new ProfileDiscoveryProvider()],
+      providers: [new AliasDiscoveryProvider(), new DataStoreDiscoveryProvider()],
     }),
   ],
 })
