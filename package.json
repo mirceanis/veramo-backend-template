@@ -63,7 +63,7 @@
     "@veramo/selective-disclosure": "^3.1.6-next",
     "@veramo/url-handler": "^3.1.6-next",
     "did-resolver": "^4.0.0",
-    "ethr-did-resolver": "^6.0.0",
+    "ethr-did-resolver": "^7.0.0",
     "sqlite3": "^5.0.2",
     "web-did-resolver": "^2.0.4"
   }
