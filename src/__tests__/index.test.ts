@@ -21,7 +21,7 @@ describe('basic', () => {
       id: did,
       verificationMethod: [
         {
-          blockchainAccountId: `eip155:4:${address}`,
+          blockchainAccountId: `eip155:5:${address}`,
           controller: did,
           id: `${did}#controller`,
           type: 'EcdsaSecp256k1RecoveryMethod2020',
