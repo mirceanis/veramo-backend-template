@@ -49,7 +49,7 @@ const dbConnection = new DataSource({
   migrationsRun: true,
   logging: false,
   entities: Entities,
-})
+}).initialize()
 
 export const agent = createAgent<
   // these interfaces should match the plugins you add next. They are optional but very useful for auto-complete.
