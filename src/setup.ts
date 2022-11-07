@@ -82,7 +82,7 @@ export const agent = createAgent<
     }),
     new DIDManager({
       store: new DIDStore(dbConnection),
-      defaultProvider: 'did:ethr:rinkeby',
+      defaultProvider: 'did:ethr:goerli',
       providers: {
         'did:ethr:goerli': new EthrDIDProvider({
           defaultKms: 'local',
