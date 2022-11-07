@@ -22,7 +22,7 @@ import {
 } from '@veramo/data-store'
 import { DIDDiscovery, IDIDDiscovery } from '@veramo/did-discovery'
 
-import { createConnection } from 'typeorm'
+import { DataSource } from 'typeorm'
 import { KeyManager } from '@veramo/key-manager'
 import { DIDResolverPlugin } from '@veramo/did-resolver'
 import { Resolver } from 'did-resolver'
@@ -41,7 +41,7 @@ import { DIDCommHttpTransport } from '@veramo/did-comm/build/transports/transpor
 const infuraProjectId = '5ffc47f65c4042ce847ef66a3fa70d4c'
 const secretKey = '29739248cad1bd1a0fc4d9b75cd4d2990de535baf5caadfdf8d8f86664aa830c'
 
-const dbConnection = createConnection({
+const dbConnection = new DataSource({
   type: 'sqlite',
   database: 'agent.sqlite',
   synchronize: false,
@@ -84,10 +84,10 @@ export const agent = createAgent<
       store: new DIDStore(dbConnection),
       defaultProvider: 'did:ethr:rinkeby',
       providers: {
-        'did:ethr:rinkeby': new EthrDIDProvider({
+        'did:ethr:goerli': new EthrDIDProvider({
           defaultKms: 'local',
-          network: 'rinkeby',
-          rpcUrl: 'https://rinkeby.infura.io/v3/' + infuraProjectId,
+          network: 'goerli',
+          rpcUrl: 'https://goerli.infura.io/v3/' + infuraProjectId,
         }),
         'did:web': new WebDIDProvider({
           defaultKms: 'local',
