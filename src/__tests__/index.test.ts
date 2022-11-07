@@ -9,7 +9,7 @@ describe('basic', () => {
 
   it('1. resolves DID using agent', async () => {
     const address = '0xb09B66026bA5909A7CFE99b76875431D2b8D5190'
-    const did = `did:ethr:rinkeby:${address}`
+    const did = `did:ethr:goerli:${address}`
     const resolution = await agent.resolveDid({
       didUrl: `${did}?versionId=0`,
     })
@@ -36,7 +36,7 @@ describe('basic', () => {
     const created = await agent.didManagerGetOrCreate({
       alias: 'myDID',
       kms: 'local',
-      provider: 'did:ethr:rinkeby',
+      provider: 'did:ethr:goerli',
     })
     expect(created.keys).toHaveLength(1)
   })
