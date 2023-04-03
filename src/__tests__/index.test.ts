@@ -1,4 +1,5 @@
-import { agent } from '../setup'
+import { jest } from '@jest/globals'
+import { agent } from '../setup.js'
 
 jest.setTimeout(30000)
 
@@ -14,10 +15,7 @@ describe('basic', () => {
       didUrl: `${did}?versionId=0`,
     })
     expect(resolution.didDocument).toEqual({
-      '@context': [
-        'https://www.w3.org/ns/did/v1',
-        'https://w3id.org/security/suites/secp256k1recovery-2020/v2',
-      ],
+      '@context': ['https://www.w3.org/ns/did/v1', 'https://w3id.org/security/suites/secp256k1recovery-2020/v2'],
       id: did,
       verificationMethod: [
         {
@@ -53,8 +51,8 @@ describe('basic', () => {
         issuer: myDID.did,
       },
       proofFormat: 'jwt',
-      save: true,
     })
+    await agent.dataStoreSaveVerifiableCredential({ verifiableCredential: credential })
     expect(credential.credentialSubject).toEqual({
       hello: 'world',
     })

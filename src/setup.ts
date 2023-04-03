@@ -7,18 +7,18 @@ import {
   IMessageHandler,
   IResolver,
 } from '@veramo/core'
-import { CredentialIssuer, ICredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
+import { CredentialPlugin, ICredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure, SdrMessageHandler, SelectiveDisclosure } from '@veramo/selective-disclosure'
-import { DIDComm, DIDCommMessageHandler, IDIDComm } from '@veramo/did-comm'
+import { DIDComm, DIDCommHttpTransport, DIDCommMessageHandler } from '@veramo/did-comm'
 import {
   DataStore,
+  DataStoreDiscoveryProvider,
   DataStoreORM,
   DIDStore,
   Entities,
   KeyStore,
   migrations,
   PrivateKeyStore,
-  DataStoreDiscoveryProvider,
 } from '@veramo/data-store'
 import { DIDDiscovery, IDIDDiscovery } from '@veramo/did-discovery'
 
@@ -35,7 +35,6 @@ import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { WebDIDProvider } from '@veramo/did-provider-web'
 import { MessageHandler } from '@veramo/message-handler'
 import { JwtMessageHandler } from '@veramo/did-jwt'
-import { DIDCommHttpTransport } from '@veramo/did-comm/build/transports/transports'
 
 // Customize these values to your own project
 const infuraProjectId = '5ffc47f65c4042ce847ef66a3fa70d4c'
@@ -59,7 +58,6 @@ export const agent = createAgent<
     IDataStore &
     IDataStoreORM &
     IMessageHandler &
-    IDIDComm &
     ICredentialIssuer &
     ISelectiveDisclosure &
     IDIDDiscovery
@@ -108,7 +106,7 @@ export const agent = createAgent<
       ],
     }),
     new DIDComm([new DIDCommHttpTransport()]),
-    new CredentialIssuer(),
+    new CredentialPlugin(),
     new SelectiveDisclosure(),
     new DIDDiscovery({
       providers: [new AliasDiscoveryProvider(), new DataStoreDiscoveryProvider()],
