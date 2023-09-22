@@ -82,10 +82,10 @@ export const agent = createAgent<
       store: new DIDStore(dbConnection),
       defaultProvider: 'did:ethr:goerli',
       providers: {
-        'did:ethr:goerli': new EthrDIDProvider({
+        'did:ethr': new EthrDIDProvider({
           defaultKms: 'local',
-          network: 'goerli',
-          rpcUrl: 'https://goerli.infura.io/v3/' + infuraProjectId,
+          network: 'mainnet',
+          rpcUrl: 'https://mainnet.infura.io/v3/' + infuraProjectId,
         }),
         'did:web': new WebDIDProvider({
           defaultKms: 'local',
