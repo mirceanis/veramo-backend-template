@@ -80,7 +80,7 @@ export const agent = createAgent<
     }),
     new DIDManager({
       store: new DIDStore(dbConnection),
-      defaultProvider: 'did:ethr:goerli',
+      defaultProvider: 'did:ethr',
       providers: {
         'did:ethr': new EthrDIDProvider({
           defaultKms: 'local',

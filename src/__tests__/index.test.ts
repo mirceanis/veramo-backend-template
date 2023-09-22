@@ -33,8 +33,6 @@ describe('basic', () => {
   it('2. creates a DID', async () => {
     const created = await agent.didManagerGetOrCreate({
       alias: 'myDID',
-      kms: 'local',
-      provider: 'did:ethr',
     })
     expect(created.keys).toHaveLength(1)
   })
@@ -42,7 +40,6 @@ describe('basic', () => {
   it('3. creates and saves a Credential', async () => {
     const myDID = await agent.didManagerGetByAlias({
       alias: 'myDID',
-      provider: 'did:ethr',
     })
     const credential = await agent.createVerifiableCredential({
       credential: {
@@ -62,7 +59,6 @@ describe('basic', () => {
   it('4. finds a Credential', async () => {
     const myDID = await agent.didManagerGetByAlias({
       alias: 'myDID',
-      provider: 'did:ethr',
     })
     const myCredential = await agent.dataStoreORMGetVerifiableCredentials({
       where: [{ column: 'issuer', value: [myDID.did] }],
