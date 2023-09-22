@@ -67,6 +67,6 @@
     "web-did-resolver": "^2.0.27"
   },
   "resolutions": {
-    "jsonld": "npm:@digitalcredentials/jsonld@^5.2.1"
+    "jsonld": "npm:@digitalcredentials/jsonld@^6.0.0"
   }
 }

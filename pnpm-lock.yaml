@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  jsonld: npm:@digitalcredentials/jsonld@^5.2.1
+  jsonld: npm:@digitalcredentials/jsonld@^6.0.0
 
 dependencies:
   '@veramo/core':
@@ -1746,7 +1746,7 @@ packages:
     requiresBuild: true
     dependencies:
       credentials-context: 2.0.0
-      jsonld: /@digitalcredentials/jsonld@5.2.2(expo@49.0.11)(react-native@0.72.4)
+      jsonld: /@digitalcredentials/jsonld@6.0.0(expo@49.0.11)(react-native@0.72.4)
       jsonld-signatures: 11.2.1(expo@49.0.11)(react-native@0.72.4)
     transitivePeerDependencies:
       - domexception
@@ -1856,6 +1856,7 @@ packages:
   /@digitalcredentials/jsonld@5.2.2(expo@49.0.11)(react-native@0.72.4):
     resolution: {integrity: sha512-hz7YR3kv6+8UUdgMyTGl1o8NjVKKwnMry/Rh/rWeAvwL+NqgoUHorWzI3rM+PW+MPFyDC0ieXStClt9n9D9SGA==}
     engines: {node: '>=12'}
+    requiresBuild: true
     dependencies:
       '@digitalcredentials/http-client': 1.2.2
       '@digitalcredentials/rdf-canonize': 1.0.0(expo@49.0.11)(react-native@0.72.4)
@@ -1867,6 +1868,7 @@ packages:
       - react-native
       - web-streams-polyfill
     dev: false
+    optional: true
 
   /@digitalcredentials/jsonld@6.0.0(expo@49.0.11)(react-native@0.72.4):
     resolution: {integrity: sha512-5tTakj0/GsqAJi8beQFVMQ97wUJZnuxViW9xRuAATL6eOBIefGBwHkVryAgEq2I4J/xKgb/nEyw1ZXX0G8wQJQ==}
@@ -1883,7 +1885,6 @@ packages:
       - react-native
       - web-streams-polyfill
     dev: false
-    optional: true
 
   /@digitalcredentials/keypair@1.0.5:
     resolution: {integrity: sha512-g0QvhJMTSFCoUkEvSeggwVTJa2jFkQXjf/mpTn9sePkz+5OouMEDfXUWL61juTaxK5JWPEFc0PKlolXzHaHHHQ==}
@@ -3762,7 +3763,7 @@ packages:
     requiresBuild: true
     dependencies:
       json-pointer: 0.6.2
-      jsonld: /@digitalcredentials/jsonld@5.2.2(expo@49.0.11)(react-native@0.72.4)
+      jsonld: /@digitalcredentials/jsonld@6.0.0(expo@49.0.11)(react-native@0.72.4)
     transitivePeerDependencies:
       - domexception
       - expo
@@ -7952,7 +7953,7 @@ packages:
     resolution: {integrity: sha512-jclmnPRrm5SEpaIV6IiSTJxplRAqIWHduQLsUfrYpZM41Ng48m1RN2/aUyHze/ynfO0D2UhlJBt8SdObsH5GBw==}
     engines: {node: '>=10'}
     dependencies:
-      jsonld: /@digitalcredentials/jsonld@5.2.2(expo@49.0.11)(react-native@0.72.4)
+      jsonld: /@digitalcredentials/jsonld@6.0.0(expo@49.0.11)(react-native@0.72.4)
       node-fetch: 2.7.0
     transitivePeerDependencies:
       - domexception
@@ -7968,7 +7969,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@digitalbazaar/security-context': 1.0.1
-      jsonld: /@digitalcredentials/jsonld@5.2.2(expo@49.0.11)(react-native@0.72.4)
+      jsonld: /@digitalcredentials/jsonld@6.0.0(expo@49.0.11)(react-native@0.72.4)
       serialize-error: 8.1.0
     transitivePeerDependencies:
       - domexception
