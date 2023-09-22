@@ -8,7 +8,7 @@ describe('basic', () => {
     // nop
   })
 
-  it('1. resolves DID using agent', async () => {
+  it('1. resolves hardcoded DID using agent', async () => {
     const address = '0xb09B66026bA5909A7CFE99b76875431D2b8D5190'
     const did = `did:ethr:${address}`
     const resolution = await agent.resolveDid({
@@ -42,6 +42,7 @@ describe('basic', () => {
   it('3. creates and saves a Credential', async () => {
     const myDID = await agent.didManagerGetByAlias({
       alias: 'myDID',
+      provider: 'did:ethr',
     })
     const credential = await agent.createVerifiableCredential({
       credential: {
@@ -61,6 +62,7 @@ describe('basic', () => {
   it('4. finds a Credential', async () => {
     const myDID = await agent.didManagerGetByAlias({
       alias: 'myDID',
+      provider: 'did:ethr',
     })
     const myCredential = await agent.dataStoreORMGetVerifiableCredentials({
       where: [{ column: 'issuer', value: [myDID.did] }],
