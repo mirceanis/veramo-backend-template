@@ -1,12 +1,13 @@
 import {
-  createAgent, ICredentialPlugin,
+  createAgent,
+  ICredentialPlugin,
   IDataStore,
   IDataStoreORM,
   IDIDManager,
   IKeyManager,
   IMessageHandler,
-  IResolver
-} from "@veramo/core";
+  IResolver,
+} from '@veramo/core'
 import { CredentialPlugin, W3cMessageHandler } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure, SdrMessageHandler, SelectiveDisclosure } from '@veramo/selective-disclosure'
 import { DIDComm, DIDCommHttpTransport, DIDCommMessageHandler } from '@veramo/did-comm'
@@ -25,7 +26,6 @@ import { DIDDiscovery, IDIDDiscovery } from '@veramo/did-discovery'
 import { DataSource } from 'typeorm'
 import { KeyManager } from '@veramo/key-manager'
 import { DIDResolverPlugin } from '@veramo/did-resolver'
-import { Resolver } from 'did-resolver'
 import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { getDidKeyResolver, KeyDIDProvider } from '@veramo/did-provider-key'
@@ -35,7 +35,7 @@ import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { WebDIDProvider } from '@veramo/did-provider-web'
 import { MessageHandler } from '@veramo/message-handler'
 import { JwtMessageHandler } from '@veramo/did-jwt'
-import { PeerDIDProvider, getResolver as peerDidResolver } from "@veramo/did-provider-peer";
+import { PeerDIDProvider, getResolver as peerDidResolver } from '@veramo/did-provider-peer'
 
 // Customize these values to your own project
 const infuraProjectId = '5ffc47f65c4042ce847ef66a3fa70d4c'
@@ -69,12 +69,10 @@ export const agent = createAgent<
     // it's a good idea to add the corresponding plugin interface `types` to the `createAgent<types>`
     // it is optional, but very useful for auto-complete
     new DIDResolverPlugin({
-      resolver: new Resolver({
-        ...ethrDidResolver({ infuraProjectId }),
-        ...webDidResolver(),
-        ...getDidKeyResolver(),
-        ...peerDidResolver()
-      }),
+      ...ethrDidResolver({ infuraProjectId }),
+      ...webDidResolver(),
+      ...getDidKeyResolver(),
+      ...peerDidResolver(),
     }),
     new KeyManager({
       store: new KeyStore(dbConnection),
@@ -91,7 +89,7 @@ export const agent = createAgent<
           network: 'mainnet',
           rpcUrl: 'https://mainnet.infura.io/v3/' + infuraProjectId,
         }),
-        'did:web': new WebDIDProvider({ defaultKms, }),
+        'did:web': new WebDIDProvider({ defaultKms }),
         'did:key': new KeyDIDProvider({ defaultKms }),
         'did:peer': new PeerDIDProvider({ defaultKms }),
       },
