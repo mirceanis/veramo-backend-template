@@ -1,9 +1,16 @@
 import express from 'express'
-import { agent } from './setup.js'
-import { AgentRouter, ApiSchemaRouter, RequestWithAgentRouter, WebDidDocRouter } from '@veramo/remote-server'
+import { agent } from './setup-local'
+import {
+  AgentRouter,
+  ApiSchemaRouter,
+  MessagingRouter,
+  RequestWithAgentRouter,
+  WebDidDocRouter,
+} from '@veramo/remote-server'
 
 const exposedMethods = agent.availableMethods()
 const basePath = '/agent'
+const messagingPath = '/messaging'
 const schemaPath = '/open-api.json'
 
 const agentRouter = AgentRouter({
@@ -15,9 +22,17 @@ const schemaRouter = ApiSchemaRouter({
   exposedMethods,
 })
 
+const messagingRouter = MessagingRouter({
+  metaData: { type: 'incoming' },
+  save: false,
+})
+
 const app = express()
 app.use(RequestWithAgentRouter({ agent }))
 app.use(basePath, agentRouter)
 app.use(schemaPath, schemaRouter)
+app.use(messagingPath, messagingRouter)
 app.use(WebDidDocRouter({}))
-app.listen(3002, () => console.log('Listening on port 3002'))
+
+const PORT = 3002
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))

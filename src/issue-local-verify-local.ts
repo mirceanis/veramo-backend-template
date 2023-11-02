@@ -1,4 +1,4 @@
-import { agent } from './setup.js'
+import { agent } from './setup-local'
 
 const issuer = await agent.didManagerGetOrCreate({ provider: 'did:key', alias: 'myIssuer' })
 
@@ -12,7 +12,7 @@ const credential = await agent.createVerifiableCredential({
     issuer: { id: issuer.did },
     credentialSubject: {
       id: subject.did,
-      isNice: true,
+      created: 'locally',
     },
   },
   proofFormat: 'jwt',

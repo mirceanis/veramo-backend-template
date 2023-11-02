@@ -19,7 +19,8 @@
   "scripts": {
     "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest",
     "build": "tsc",
-    "start": "node --no-warnings --loader ts-node/esm src/index.ts",
+    "local": "node --no-warnings --loader ts-node/esm src/issue-local-verify-local.ts",
+    "remote": "node --no-warnings --loader ts-node/esm src/issue-remote-verify-local.ts",
     "server": "node --no-warnings --loader ts-node/esm src/server.ts",
     "format": "prettier -w '**/**.{js,ts,json,md,yml}'"
   },
