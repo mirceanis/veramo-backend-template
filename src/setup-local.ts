@@ -82,7 +82,7 @@ export const agent = createAgent<
     }),
     new DIDManager({
       store: new DIDStore(dbConnection),
-      defaultProvider: 'did:peer',
+      defaultProvider: 'did:key',
       providers: {
         'did:ethr': new EthrDIDProvider({
           defaultKms,

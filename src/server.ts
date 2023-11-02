@@ -8,7 +8,13 @@ import {
   WebDidDocRouter,
 } from '@veramo/remote-server'
 
-const exposedMethods = agent.availableMethods()
+const exposedMethods = [  //...agent.availableMethods(),
+  'didManagerGetOrCreate',
+  'didManagerGet',
+  'keyManagerSign',
+  'createVerifiableCredential',
+  'createVerifiablePresentation',
+]
 const basePath = '/agent'
 const messagingPath = '/messaging'
 const schemaPath = '/open-api.json'

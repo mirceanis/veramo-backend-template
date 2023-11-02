@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals'
-import { agent } from '../setup.js'
+import { agent } from '../setup-local'
 
 jest.setTimeout(10000)
 
