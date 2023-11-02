@@ -1,13 +1,9 @@
 import { jest } from '@jest/globals'
 import { agent } from '../setup.js'
 
-jest.setTimeout(30000)
+jest.setTimeout(10000)
 
 describe('basic', () => {
-  beforeAll(async () => {
-    // nop
-  })
-
   it('1. resolves hardcoded DID using agent', async () => {
     const address = '0xb09B66026bA5909A7CFE99b76875431D2b8D5190'
     const did = `did:ethr:${address}`
@@ -56,7 +52,7 @@ describe('basic', () => {
     })
   })
 
-  it('4. finds a Credential', async () => {
+  it('4. finds and verifies a Credential', async () => {
     const myDID = await agent.didManagerGetByAlias({
       alias: 'myDID',
     })
@@ -67,5 +63,8 @@ describe('basic', () => {
     expect(myCredential[0].verifiableCredential.credentialSubject).toEqual({
       hello: 'world',
     })
+
+    const verified = await agent.verifyCredential({ credential: myCredential[0].verifiableCredential })
+    expect(verified.verified).toBe(true)
   })
 })
