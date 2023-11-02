@@ -1,13 +1,13 @@
 import {
-  createAgent,
+  createAgent, ICredentialPlugin,
   IDataStore,
   IDataStoreORM,
   IDIDManager,
   IKeyManager,
   IMessageHandler,
-  IResolver,
-} from '@veramo/core'
-import { CredentialPlugin, ICredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
+  IResolver
+} from "@veramo/core";
+import { CredentialPlugin, W3cMessageHandler } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure, SdrMessageHandler, SelectiveDisclosure } from '@veramo/selective-disclosure'
 import { DIDComm, DIDCommHttpTransport, DIDCommMessageHandler } from '@veramo/did-comm'
 import {
@@ -35,6 +35,7 @@ import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { WebDIDProvider } from '@veramo/did-provider-web'
 import { MessageHandler } from '@veramo/message-handler'
 import { JwtMessageHandler } from '@veramo/did-jwt'
+import { PeerDIDProvider, getResolver as peerDidResolver } from "@veramo/did-provider-peer";
 
 // Customize these values to your own project
 const infuraProjectId = '5ffc47f65c4042ce847ef66a3fa70d4c'
@@ -50,6 +51,8 @@ const dbConnection = new DataSource({
   entities: Entities,
 }).initialize()
 
+const defaultKms = 'local'
+
 export const agent = createAgent<
   // these interfaces should match the plugins you add next. They are optional but very useful for auto-complete.
   IResolver &
@@ -58,7 +61,7 @@ export const agent = createAgent<
     IDataStore &
     IDataStoreORM &
     IMessageHandler &
-    ICredentialIssuer &
+    ICredentialPlugin &
     ISelectiveDisclosure &
     IDIDDiscovery
 >({
@@ -70,29 +73,27 @@ export const agent = createAgent<
         ...ethrDidResolver({ infuraProjectId }),
         ...webDidResolver(),
         ...getDidKeyResolver(),
+        ...peerDidResolver()
       }),
     }),
     new KeyManager({
       store: new KeyStore(dbConnection),
       kms: {
-        local: new KeyManagementSystem(new PrivateKeyStore(dbConnection, new SecretBox(secretKey))),
+        [defaultKms]: new KeyManagementSystem(new PrivateKeyStore(dbConnection, new SecretBox(secretKey))),
       },
     }),
     new DIDManager({
       store: new DIDStore(dbConnection),
-      defaultProvider: 'did:ethr',
+      defaultProvider: 'did:peer',
       providers: {
         'did:ethr': new EthrDIDProvider({
-          defaultKms: 'local',
+          defaultKms,
           network: 'mainnet',
           rpcUrl: 'https://mainnet.infura.io/v3/' + infuraProjectId,
         }),
-        'did:web': new WebDIDProvider({
-          defaultKms: 'local',
-        }),
-        'did:key': new KeyDIDProvider({
-          defaultKms: 'local',
-        }),
+        'did:web': new WebDIDProvider({ defaultKms, }),
+        'did:key': new KeyDIDProvider({ defaultKms }),
+        'did:peer': new PeerDIDProvider({ defaultKms }),
       },
     }),
     new DataStore(dbConnection),

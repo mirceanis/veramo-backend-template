@@ -1,4 +1,24 @@
 import { agent } from './setup.js'
 
-const resolution = await agent.resolveDid({ didUrl: 'did:ethr:0xb09b66026ba5909a7cfe99b76875431d2b8d5190' })
-console.dir(resolution.didDocument, { depth: 5 })
+const issuer = await agent.didManagerGetOrCreate({ provider: 'did:key', alias: 'myIssuer' })
+
+console.log(`Created an issuer with ID: ${issuer.did}`)
+
+const subject = await agent.didManagerGetOrCreate({ provider: 'did:key', alias: 'mySubject' })
+console.log(`Created an identifier for a subject with ID: ${subject.did}`)
+
+const credential = await agent.createVerifiableCredential({
+  credential: {
+    issuer: { id: issuer.did },
+    credentialSubject: {
+      id: subject.did,
+      isNice: true,
+    },
+  },
+  proofFormat: 'jwt',
+})
+
+console.log(`Created a verifiable credential: ${JSON.stringify(credential, null, 2)}`)
+
+const verified = await agent.verifyCredential({ credential })
+console.log(`Credential verified: ${verified.verified}`)
